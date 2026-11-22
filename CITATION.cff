@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use the functional locality harness, certificate schema, empirical laws, or public MoE reproduction scripts, please cite this release."
+title: "Functional Locality in Sparse Mixture-of-Experts: Empirical Laws, Self-Falsified Predictors, Fail-Closed Certificates, and Open Multi-Architecture Reproduction"
+version: "1.0.0"
+date-released: "2026-11-22"
+license: "Apache-2.0"
+repository-code: "https://github.com/kataguru/functional-locality-moe"
+authors:
+  - family-names: "Katajisto"
+    given-names: "Jari"
+    affiliation: "Kataguru Research"
+keywords:
+  - mixture-of-experts
+  - sparse-moe
+  - functional-locality
+  - modular-fine-tuning
+  - fail-closed-certificates
+  - evaluation-metrology
+  - non-determinism
+abstract: >-
+  An empirical investigation of routing locality (L1), functional locality (L2),
+  and disjoint-support composition (L3) in Sparse Mixture-of-Experts models,
+  including necessary-vs-sufficient failure analysis, candidate Law 7 cross-cartridge
+  router dominance, self-falsified unweighted Law 2 vs. continuous early-layer exposure,
+  machine-enforced JSON Schema Draft 2020-12 fail-closed certificates (7 mutation tests),
+  and open reproduction on public Apache-2.0 MoE architectures.

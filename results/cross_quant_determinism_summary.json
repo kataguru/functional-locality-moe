@@ -1,0 +1,303 @@
+{
+  "study": "Kernel-Level MoE Non-Determinism Invalidates Long-CoT Benchmark Comparisons",
+  "upstream_reference": {
+    "vllm_issue": "vllm-project/vllm#52525",
+    "fix_prs": [
+      "#52532",
+      "#48032"
+    ],
+    "batch_invariance_tracking": "vllm-project/vllm#27433",
+    "upstream_reproduced_archs": [
+      "sm_80",
+      "sm_90",
+      "sm_121"
+    ],
+    "this_study_arch": "sm_120 (NVIDIA GeForce RTX 5090)"
+  },
+  "environment": {
+    "vllm_version": "0.29.0",
+    "torch_version": "2.12.1+cu130",
+    "cuda_version": "13.0",
+    "gpu": "NVIDIA GeForce RTX 5090 (32GB, sm_120)",
+    "VLLM_MARLIN_USE_ATOMIC_ADD": false
+  },
+  "scope_disclosure": {
+    "tested_here": [
+      "AWQ W4A16 Marlin MoE",
+      "NVFP4-Marlin MoE",
+      "AWQ W4A16 TritonWNA16 MoE (VLLM_BATCH_INVARIANT=1)",
+      "BF16 Triton MoE",
+      "FP8 Triton MoE",
+      "Dense NVFP4 FlashInferCutlass"
+    ],
+    "known_upstream": [
+      "GPTQ int4 Marlin MoE (vllm#52525)"
+    ],
+    "not_tested_here": [
+      "MXFP4-Marlin"
+    ]
+  },
+  "selection_bias_disclosure": "The 30-item and 20-item GPQA-Diamond subsets were drawn from the 44 items that exhibited A/B/C/D answer flips under w=16 concurrent serving (maximal-instability subset, NOT population flip rate). Selection-bias-free verification is provided independently by (1) 5x identical prefills of a fresh chemistry prompt (5/5 distinct top-5 logprob vectors; downstream text divergence at word 45/53 under default Marlin vs 5/5 bit-exact under VLLM_BATCH_INVARIANT=1 and PR #52532) and (2) the 0.68s standalone sm_120 CUDA kernel micro-reproducer (20/20 diffs on synthetic tensors).",
+  "cross_quantization_matrix_tp1_b1_eager_noprefix": [
+    {
+      "control_id": "Control F",
+      "model": "Dense-27B-NVFP4",
+      "public_hf_id": null,
+      "architecture": "Dense",
+      "quantization": "NVFP4",
+      "vllm_batch_invariant": false,
+      "gemm_backend": "FlashInferCutlassNvFp4LinearKernel",
+      "n_items": 13,
+      "n_items_note": "13/13 completed pairs (stopped at 13/20 due to unrelated concurrent host RAM exhaustion); all 13 completed pairs were 100% bit-exact up to 26,203 characters (>190k total chars).",
+      "exact_text_matches": 13,
+      "exact_match_pct": 100.0,
+      "letter_flips": 0,
+      "correct_flips": 0
+    },
+    {
+      "control_id": "Control E2",
+      "model": "allenai/OLMoE-1B-7B-0125-Instruct",
+      "public_hf_id": "allenai/OLMoE-1B-7B-0125-Instruct",
+      "architecture": "Sparse MoE (64E, top-8, 16L)",
+      "quantization": "BF16",
+      "vllm_batch_invariant": false,
+      "gemm_backend": "TritonExperts",
+      "n_items": 20,
+      "mean_char_len": 2732.1,
+      "exact_text_matches": 20,
+      "exact_match_pct": 100.0,
+      "letter_flips": 0,
+      "correct_flips": 0
+    },
+    {
+      "control_id": "Control I",
+      "model": "allenai/OLMoE-1B-7B-0125-Instruct (--quantization fp8)",
+      "public_hf_id": "allenai/OLMoE-1B-7B-0125-Instruct",
+      "architecture": "Sparse MoE (64E, top-8, 16L)",
+      "quantization": "FP8",
+      "vllm_batch_invariant": false,
+      "gemm_backend": "TritonExperts (FP8)",
+      "n_items": 20,
+      "mean_char_len": 2580.2,
+      "exact_text_matches": 20,
+      "exact_match_pct": 100.0,
+      "letter_flips": 0,
+      "correct_flips": 0
+    },
+    {
+      "control_id": "Control L (Public A/B Cure)",
+      "model": "dark-side-of-the-code/Qwen3-Coder-30B-A3B-Instruct-AWQ",
+      "public_hf_id": "dark-side-of-the-code/Qwen3-Coder-30B-A3B-Instruct-AWQ",
+      "architecture": "Sparse MoE (128E, top-8, 48L)",
+      "quantization": "AWQ W4A16",
+      "vllm_batch_invariant": true,
+      "gemm_backend": "TritonWNA16Experts (auto-switched by VLLM_BATCH_INVARIANT=1; linear=MarlinLinearKernel)",
+      "n_items": 20,
+      "mean_char_len": 2931.6,
+      "elapsed_s": 939.8,
+      "exact_text_matches": 20,
+      "exact_match_pct": 100.0,
+      "letter_flips": 0,
+      "correct_flips": 0
+    },
+    {
+      "control_id": "Control K (Public Default)",
+      "model": "dark-side-of-the-code/Qwen3-Coder-30B-A3B-Instruct-AWQ",
+      "public_hf_id": "dark-side-of-the-code/Qwen3-Coder-30B-A3B-Instruct-AWQ",
+      "architecture": "Sparse MoE (128E, top-8, 48L)",
+      "quantization": "AWQ W4A16",
+      "vllm_batch_invariant": false,
+      "gemm_backend": "MarlinExperts (ops.moe_wna16_marlin_gemm)",
+      "n_items": 20,
+      "mean_char_len": 3026.7,
+      "elapsed_s": 852.9,
+      "exact_text_matches": 0,
+      "exact_match_pct": 0.0,
+      "letter_flips": 7,
+      "letter_flip_pct": 35.0,
+      "correct_flips": 4,
+      "correct_flip_pct": 20.0,
+      "first_div_word_median": 34.0,
+      "first_div_word_range": [
+        1,
+        138
+      ],
+      "first_div_char_median": 234.5,
+      "first_div_char_range": [
+        3,
+        826
+      ]
+    },
+    {
+      "control_id": "Control D",
+      "model": "Private-32B-A4B-MoE-NVFP4 (232E, top-10, 40L)",
+      "public_hf_id": null,
+      "architecture": "Sparse MoE (232E, top-10, 40L)",
+      "quantization": "NVFP4",
+      "vllm_batch_invariant": false,
+      "gemm_backend": "MarlinExperts (ops.moe_wna16_marlin_gemm)",
+      "n_items": 20,
+      "exact_text_matches": 2,
+      "exact_match_pct": 10.0,
+      "letter_flips": 9,
+      "letter_flip_pct": 45.0,
+      "correct_flips": 6,
+      "correct_flip_pct": 30.0,
+      "first_div_word_median": 31.5,
+      "first_div_word_range": [
+        0,
+        122
+      ],
+      "first_div_char_median": 225.0,
+      "first_div_char_range": [
+        0,
+        832
+      ]
+    },
+    {
+      "control_id": "Control M (Public PR #52532 Cure)",
+      "model": "dark-side-of-the-code/Qwen3-Coder-30B-A3B-Instruct-AWQ",
+      "public_hf_id": "dark-side-of-the-code/Qwen3-Coder-30B-A3B-Instruct-AWQ",
+      "architecture": "Sparse MoE (128E, top-8, 48L)",
+      "quantization": "AWQ W4A16",
+      "vllm_batch_invariant": false,
+      "pr52532_canonicalize_applied": true,
+      "gemm_backend": "MarlinExperts + PR #52532 (_canonicalize_marlin_moe_token_order)",
+      "n_items": 20,
+      "mean_char_len": 3061.1,
+      "elapsed_s": 945.3,
+      "chars_per_s": 129.5,
+      "exact_text_matches": 20,
+      "exact_match_pct": 100.0,
+      "letter_flips": 0,
+      "correct_flips": 0
+    }
+  ],
+  "factorial_2x2_nvfp4_moe_30items": [
+    {
+      "cell": "TP=2, CUDAGraphs ON, batch=1",
+      "tp": 2,
+      "cudagraphs": true,
+      "n": 30,
+      "exact": 2,
+      "letter_flips": 11,
+      "correct_flips": 6
+    },
+    {
+      "cell": "TP=2, Eager, batch=1",
+      "tp": 2,
+      "cudagraphs": false,
+      "n": 30,
+      "exact": 0,
+      "letter_flips": 20,
+      "correct_flips": 19
+    },
+    {
+      "cell": "TP=1, CUDAGraphs ON, batch=1",
+      "tp": 1,
+      "cudagraphs": true,
+      "n": 30,
+      "exact": 2,
+      "letter_flips": 14,
+      "correct_flips": 10
+    },
+    {
+      "cell": "TP=1, Eager, batch=1",
+      "tp": 1,
+      "cudagraphs": false,
+      "n": 30,
+      "exact": 1,
+      "letter_flips": 15,
+      "correct_flips": 14
+    }
+  ],
+  "fresh_prompt_prefill_comparison": {
+    "model": "dark-side-of-the-code/Qwen3-Coder-30B-A3B-Instruct-AWQ",
+    "server_flags": "--tensor-parallel-size 1 --enforce-eager --no-enable-prefix-caching --generation-config vllm",
+    "request_params": {
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "top_k": -1,
+      "logprobs": true,
+      "top_logprobs": 5
+    },
+    "default_marlin_batch_invariant_0": {
+      "runs": 5,
+      "top1_token": "I",
+      "top1_argmax_changed_at_token0": false,
+      "top1_logprobs": [
+        -5e-05,
+        -0.000131,
+        -5.7e-05,
+        -8.2e-05,
+        -4.9e-05
+      ],
+      "rank2_token": "Let",
+      "rank2_logprobs": [
+        -10.00005,
+        -9.000132,
+        -9.875057,
+        -9.500082,
+        -10.000049
+      ],
+      "rank2_logprob_swing_nats": 1.0,
+      "all_5_top5_bit_identical": false,
+      "gen512_exact_vs_run1": "0/2",
+      "first_divergent_gen_run2": {
+        "char_idx": 288,
+        "word_idx": 45
+      },
+      "first_divergent_gen_run3": {
+        "char_idx": 341,
+        "word_idx": 53,
+        "note": "Run 3 emitted 'Valence electrons: 5d^5' instead of '3d^5'."
+      }
+    },
+    "vllm_batch_invariant_1_triton_wna16": {
+      "runs": 5,
+      "top1_token": "I",
+      "top1_argmax_changed_at_token0": false,
+      "top1_logprobs": [
+        -9.6e-05,
+        -9.6e-05,
+        -9.6e-05,
+        -9.6e-05,
+        -9.6e-05
+      ],
+      "rank2_token": "Let",
+      "rank2_logprobs": [
+        -9.250096,
+        -9.250096,
+        -9.250096,
+        -9.250096,
+        -9.250096
+      ],
+      "rank2_logprob_swing_nats": 0.0,
+      "all_5_top5_bit_identical": true,
+      "gen512_exact_vs_run1": "2/2"
+    },
+    "pr52532_marlin_experts": {
+      "runs": 5,
+      "top1_token": "I",
+      "top1_argmax_changed_at_token0": false,
+      "top1_logprobs": [
+        -7.5e-05,
+        -7.5e-05,
+        -7.5e-05,
+        -7.5e-05,
+        -7.5e-05
+      ],
+      "rank2_token": "Let",
+      "rank2_logprobs": [
+        -9.500075,
+        -9.500075,
+        -9.500075,
+        -9.500075,
+        -9.500075
+      ],
+      "rank2_logprob_swing_nats": 0.0,
+      "all_5_top5_bit_identical": true,
+      "gen512_exact_vs_run1": "2/2"
+    }
+  }
+}

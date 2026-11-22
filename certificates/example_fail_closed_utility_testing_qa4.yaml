@@ -1,0 +1,106 @@
+schema_version: "moe-locality-certificate-v1.4"
+issued_at_utc: "2026-11-22T04:13:51+00:00"
+harness_version: "cached_paired_nll_v1.0"
+cartridge_id: "testing-qa-4-L6-39"
+verdict: "REJECTED_FAIL_CLOSED"
+mode: "replace"
+carries_neutral_u: false
+layers_modified: "L06-L39 (L00-L05 frozen)"
+artifact:
+  path: "<closed-proprietary-artifact>"
+  bytes: 1006645464
+  sha256: "20dfcf5a3d8d677a960cb04f293c6161ec6c543922e728b4238c84fb823f7b12"
+envelope:
+  base_model: "Kataguru-32B-A4B-v1-Sykli4-Soup50-CodeRestore-232E-BF16"
+  base_index_sha256: "991ce1997dc22af34b3a5d027e122dbed413d1e1a92eacf8ccb14d54922dcec1"
+  precision_validated:
+    - "BF16"
+  context_validated: "2k-32k"
+  router_frozen: true
+engine:
+  vllm_version: "0.29.0"
+  torch_version: "2.12.1+cu130"
+  cuda_version: "13.0"
+  router_dtype: "bfloat16"
+  nvfp4_calibration_hash: "not_quantized_rejected_at_t3"
+nondeterminism:
+  measured_on: "n_a_single_forward"
+  subset_bias: "none (deterministic paired single-forward BF16 NLL harness)"
+  flip_rate: null
+  flip_rate_note: "N/A — single-forward BF16 NLL evaluation, no autoregressive generation"
+  batch_config: "single-forward paired BF16 logprob harness (null=0.00000)"
+  tp: 1
+  cudagraphs_on: false
+  temperature: 0.0
+  measured_on_benchmark: "T3 cached paired NLL null_control"
+noise_floor:
+  t3_null_control:
+    b: 0
+    c: 0
+    flip_sd: 0.0
+    stable_n: 572
+    discordant_excluded: 0
+controller:
+  controller_type: "byoe_fixed_epoch_kl_anchor"
+  anchor_floor: 0.10
+  probe_interval: 5
+  stop_reason: "epoch_complete_rejected_utility_gate"
+  best_checkpoint_step: 250
+  trace_sha256: "sha256_internal_run_log_task42761"
+  exposure_histogram:
+    epoch_1_unique_pct: 100.0
+curriculum:
+  difficulty_ordering: "none_shuffled_single_epoch"
+  hard_coverage: 1.0
+  injection_source: "logit_kl_anchor"
+  curriculum_note: "BYOE cartridge run used 1-epoch shuffled unique domain data + logit_kl_anchor (did NOT run the full-backbone 30%-anchor / 50-step tercile rebalancer)."
+target_utility:
+  domain: "testing_qa_holdout"
+  asst_delta_mean: -0.02720
+  asst_delta_95ci:
+    - -0.03681
+    - -0.01760
+target_known_retention:
+  domain: "testing_qa_known_subset"
+  known_subset_asst_delta: null
+  status: "UNMEASURED_C009_OPEN"
+protocol_amendments:
+  - "Amendment #2: P2 demoted to non-gating diagnostic per Law 6."
+failed_gates:
+  - "UTILITY: testing_qa_holdout ASST_d = -0.02720 > -0.030 limit (borderline fail-closed rejection)"
+  - "P6 (Union-3): testing_qa retention = 61.46% < 70% limit (L7 functional overlap under Coder-12)"
+checks:
+  - gate: "P1"
+    metric: "stem_upper95_ci"
+    observed: -0.0029
+    limit: "<= +0.003"
+    status: "PASS"
+  - gate: "P1"
+    metric: "gsm8k_math_upper95_ci"
+    observed: -0.0054
+    limit: "<= +0.003"
+    status: "PASS"
+  - gate: "P1"
+    metric: "ifeval_upper95_ci"
+    observed: 0.0007
+    limit: "<= +0.003"
+    status: "PASS"
+  - gate: "P1"
+    metric: "bfcl_tool_upper95_ci"
+    observed: -0.0021
+    limit: "<= +0.003"
+    status: "PASS"
+  - gate: "UTILITY"
+    metric: "testing_qa_holdout_asst_delta"
+    observed: -0.02720
+    limit: "<= -0.030"
+    status: "FAIL"
+  - gate: "P6"
+    metric: "union3_testing_qa_retention_pct"
+    observed: 61.46
+    limit: ">= 70.0%"
+    status: "FAIL"
+diagnostics:
+  - metric: "p2_stem_top10_jaccard"
+    observed: 0.9461
+    note: "Non-gating diagnostic (Law 6 boundary sensitivity)"

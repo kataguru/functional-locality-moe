@@ -1,0 +1,42 @@
+{
+  "tp2_cudagraphs": {
+    "experiment": "EXP-AUDIT1-gpqa-batch1-determinism",
+    "model": "CodeRestore-232E-NVFP4",
+    "n_tested_from_w16_flips": 30,
+    "w16_total_letter_flips": 44,
+    "b1_exact_text_matches": 2,
+    "b1_letter_flips": 11,
+    "b1_correct_flips": 6,
+    "elapsed_s": 86.6
+  },
+  "tp2_eager": {
+    "experiment": "EXP-AUDIT1-gpqa-batch1-determinism",
+    "model": "CodeRestore-232E-NVFP4",
+    "n_tested_from_w16_flips": 30,
+    "w16_total_letter_flips": 44,
+    "b1_exact_text_matches": 0,
+    "b1_letter_flips": 20,
+    "b1_correct_flips": 19,
+    "elapsed_s": 805.3
+  },
+  "tp1_cudagraphs": {
+    "experiment": "EXP-AUDIT1-gpqa-batch1-determinism",
+    "model": "CodeRestore-232E-NVFP4",
+    "n_tested_from_w16_flips": 30,
+    "w16_total_letter_flips": 44,
+    "b1_exact_text_matches": 2,
+    "b1_letter_flips": 14,
+    "b1_correct_flips": 10,
+    "elapsed_s": 121.4
+  },
+  "tp1_eager": {
+    "experiment": "EXP-AUDIT1-gpqa-batch1-determinism",
+    "model": "CodeRestore-232E-NVFP4",
+    "n_tested_from_w16_flips": 30,
+    "w16_total_letter_flips": 44,
+    "b1_exact_text_matches": 1,
+    "b1_letter_flips": 15,
+    "b1_correct_flips": 14,
+    "elapsed_s": 760.5
+  }
+}

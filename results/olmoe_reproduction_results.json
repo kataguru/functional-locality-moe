@@ -1,0 +1,266 @@
+{
+  "model": "allenai/OLMoE-1B-7B-0125-Instruct",
+  "device": "NVIDIA GeForce RTX 5090",
+  "elapsed_s": 955.1,
+  "base_nll": {
+    "code_mbpp": 1.826964,
+    "math_gsm8k": 2.394711,
+    "stem_sciq": 2.948688,
+    "wiki_prose": 2.965336
+  },
+  "law6_boundary_sensitivity": {
+    "eps_0.005": {
+      "code_mbpp": {
+        "delta_nll": 0.000661,
+        "jaccard_mean": 0.9916,
+        "jaccard_min_layer": 0.9839,
+        "jaccard_min_idx": 15
+      },
+      "math_gsm8k": {
+        "delta_nll": 0.002103,
+        "jaccard_mean": 0.9949,
+        "jaccard_min_layer": 0.9849,
+        "jaccard_min_idx": 15
+      },
+      "stem_sciq": {
+        "delta_nll": 0.00276,
+        "jaccard_mean": 0.9916,
+        "jaccard_min_layer": 0.9807,
+        "jaccard_min_idx": 15
+      },
+      "wiki_prose": {
+        "delta_nll": -0.002043,
+        "jaccard_mean": 0.9934,
+        "jaccard_min_layer": 0.9858,
+        "jaccard_min_idx": 15
+      }
+    },
+    "eps_0.01": {
+      "code_mbpp": {
+        "delta_nll": 0.002432,
+        "jaccard_mean": 0.9917,
+        "jaccard_min_layer": 0.9841,
+        "jaccard_min_idx": 15
+      },
+      "math_gsm8k": {
+        "delta_nll": 0.002543,
+        "jaccard_mean": 0.9944,
+        "jaccard_min_layer": 0.984,
+        "jaccard_min_idx": 15
+      },
+      "stem_sciq": {
+        "delta_nll": 0.002328,
+        "jaccard_mean": 0.9913,
+        "jaccard_min_layer": 0.9792,
+        "jaccard_min_idx": 15
+      },
+      "wiki_prose": {
+        "delta_nll": -0.000408,
+        "jaccard_mean": 0.9937,
+        "jaccard_min_layer": 0.9874,
+        "jaccard_min_idx": 15
+      }
+    },
+    "eps_0.02": {
+      "code_mbpp": {
+        "delta_nll": 0.000851,
+        "jaccard_mean": 0.9917,
+        "jaccard_min_layer": 0.9847,
+        "jaccard_min_idx": 14
+      },
+      "math_gsm8k": {
+        "delta_nll": 0.002057,
+        "jaccard_mean": 0.9949,
+        "jaccard_min_layer": 0.9848,
+        "jaccard_min_idx": 15
+      },
+      "stem_sciq": {
+        "delta_nll": 0.003867,
+        "jaccard_mean": 0.9911,
+        "jaccard_min_layer": 0.9791,
+        "jaccard_min_idx": 15
+      },
+      "wiki_prose": {
+        "delta_nll": -0.001249,
+        "jaccard_mean": 0.9931,
+        "jaccard_min_layer": 0.9853,
+        "jaccard_min_idx": 15
+      }
+    },
+    "eps_0.05": {
+      "code_mbpp": {
+        "delta_nll": -0.000443,
+        "jaccard_mean": 0.9911,
+        "jaccard_min_layer": 0.983,
+        "jaccard_min_idx": 14
+      },
+      "math_gsm8k": {
+        "delta_nll": 0.002613,
+        "jaccard_mean": 0.9942,
+        "jaccard_min_layer": 0.9824,
+        "jaccard_min_idx": 15
+      },
+      "stem_sciq": {
+        "delta_nll": 0.00342,
+        "jaccard_mean": 0.9909,
+        "jaccard_min_layer": 0.979,
+        "jaccard_min_idx": 15
+      },
+      "wiki_prose": {
+        "delta_nll": -0.002326,
+        "jaccard_mean": 0.9934,
+        "jaccard_min_layer": 0.9865,
+        "jaccard_min_idx": 15
+      }
+    }
+  },
+  "law1_evacuation": {
+    "b1_u_max_std": 0.0046,
+    "configs": {
+      "rank1_alpha0.00": {
+        "code_delta": 0.033736,
+        "stem_delta": 0.033483
+      },
+      "rank1_alpha0.25": {
+        "code_delta": 0.017365,
+        "stem_delta": 0.03333
+      },
+      "rank1_alpha0.50": {
+        "code_delta": 0.018462,
+        "stem_delta": 0.056921
+      },
+      "rank1_alpha1.00": {
+        "code_delta": 0.056564,
+        "stem_delta": 0.040982
+      },
+      "rank8_alpha0.00": {
+        "code_delta": 0.031477,
+        "stem_delta": 0.056957
+      },
+      "rank8_alpha0.25": {
+        "code_delta": -0.002371,
+        "stem_delta": 0.048434
+      },
+      "rank8_alpha0.50": {
+        "code_delta": -0.028053,
+        "stem_delta": 0.053534
+      },
+      "rank8_alpha1.00": {
+        "code_delta": -0.05621,
+        "stem_delta": 0.081313
+      },
+      "rank1_b1_u_offset_alpha1.00": {
+        "code_delta": 0.006851,
+        "stem_delta": 0.003746
+      }
+    }
+  },
+  "part4_law2_l5_c006": {
+    "runs": [
+      {
+        "regime": "bf16_adamw",
+        "rel_dW_pct": 1.066,
+        "deltas": {
+          "code_mbpp": -0.740179,
+          "math_gsm8k": -0.04506,
+          "stem_sciq": -0.018029,
+          "wiki_prose": -0.015369
+        },
+        "sum_p_rms2": {
+          "math_gsm8k": 0.03051,
+          "stem_sciq": 0.08517,
+          "wiki_prose": 0.13654
+        }
+      },
+      {
+        "regime": "fp32_8bit_no_anc",
+        "rel_dW_pct": 1.804,
+        "deltas": {
+          "code_mbpp": -0.784659,
+          "math_gsm8k": -0.077693,
+          "stem_sciq": -0.056836,
+          "wiki_prose": -0.019806
+        },
+        "sum_p_rms2": {
+          "math_gsm8k": 0.06441,
+          "stem_sciq": 0.13225,
+          "wiki_prose": 0.20128
+        }
+      },
+      {
+        "regime": "fp32_8bit_anc1.0",
+        "rel_dW_pct": 1.804,
+        "deltas": {
+          "code_mbpp": -0.789559,
+          "math_gsm8k": -0.078942,
+          "stem_sciq": -0.053981,
+          "wiki_prose": -0.018139
+        },
+        "sum_p_rms2": {
+          "math_gsm8k": 0.05657,
+          "stem_sciq": 0.11502,
+          "wiki_prose": 0.17603
+        }
+      },
+      {
+        "regime": "fp32_8bit_anc3.0",
+        "rel_dW_pct": 1.803,
+        "deltas": {
+          "code_mbpp": -0.781334,
+          "math_gsm8k": -0.081442,
+          "stem_sciq": -0.049832,
+          "wiki_prose": -0.017242
+        },
+        "sum_p_rms2": {
+          "math_gsm8k": 0.04704,
+          "stem_sciq": 0.09127,
+          "wiki_prose": 0.13906
+        }
+      },
+      {
+        "regime": "L5_freeze_L0_2",
+        "rel_dW_pct": 1.805,
+        "deltas": {
+          "code_mbpp": -0.677508,
+          "math_gsm8k": -0.070106,
+          "stem_sciq": -0.035354,
+          "wiki_prose": -0.010235
+        },
+        "sum_p_rms2": {
+          "math_gsm8k": 0.06944,
+          "stem_sciq": 0.16746,
+          "wiki_prose": 0.26268
+        }
+      },
+      {
+        "regime": "L5_freeze_L13_15",
+        "rel_dW_pct": 1.871,
+        "deltas": {
+          "code_mbpp": -0.826636,
+          "math_gsm8k": -0.064049,
+          "stem_sciq": -0.03635,
+          "wiki_prose": -0.014853
+        },
+        "sum_p_rms2": {
+          "math_gsm8k": 0.02092,
+          "stem_sciq": 0.00976,
+          "wiki_prose": 0.00432
+        }
+      }
+    ],
+    "law2_oos": {
+      "law2_sum_p_rms2": {
+        "coef": -0.0,
+        "holdout_n": 6,
+        "holdout_mae": 0.0,
+        "holdout_r2": 1.0
+      },
+      "weight_dW2": {
+        "coef": -0.0,
+        "holdout_n": 6,
+        "holdout_mae": 0.0,
+        "holdout_r2": 1.0
+      }
+    }
+  }
+}

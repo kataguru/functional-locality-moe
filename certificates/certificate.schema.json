@@ -1,0 +1,262 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://functional-locality-moe.local/schemas/certificate.schema.json",
+  "title": "Fail-Closed MoE Cartridge Certificate (v1.4)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "issued_at_utc",
+    "harness_version",
+    "cartridge_id",
+    "verdict",
+    "mode",
+    "carries_neutral_u",
+    "envelope",
+    "engine",
+    "nondeterminism",
+    "noise_floor",
+    "controller",
+    "curriculum",
+    "target_utility",
+    "target_known_retention",
+    "protocol_amendments",
+    "failed_gates",
+    "checks",
+    "diagnostics"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": { "carries_neutral_u": { "const": true } },
+        "required": ["carries_neutral_u"]
+      },
+      "then": {
+        "properties": {
+          "engine": {
+            "properties": {
+              "router_dtype": { "const": "float32" }
+            },
+            "required": ["router_dtype"]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "nondeterminism": {
+            "properties": { "measured_on": { "const": "n_a_single_forward" } },
+            "required": ["measured_on"]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "nondeterminism": {
+            "properties": { "flip_rate": { "type": "null" } },
+            "required": ["flip_rate", "flip_rate_note"]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "nondeterminism": {
+            "properties": { "measured_on": { "enum": ["base_substrate", "candidate"] } },
+            "required": ["measured_on"]
+          }
+        },
+        "required": ["nondeterminism"]
+      },
+      "then": {
+        "properties": {
+          "nondeterminism": {
+            "properties": { "flip_rate": { "type": "number" } },
+            "required": ["flip_rate"]
+          }
+        }
+      }
+    }
+  ],
+  "properties": {
+    "schema_version": { "const": "moe-locality-certificate-v1.4" },
+    "issued_at_utc": { "type": "string", "minLength": 10 },
+    "harness_version": { "type": "string", "minLength": 1 },
+    "cartridge_id": { "type": "string", "minLength": 1 },
+    "verdict": { "enum": ["CERTIFIED_PASS", "REJECTED_FAIL_CLOSED"] },
+    "mode": { "enum": ["replace", "add", "union"] },
+    "carries_neutral_u": {
+      "type": "boolean",
+      "description": "True if this cartridge modifies router gate rows with an FP64 neutral-u offset. Mechanically enforces engine.router_dtype == 'float32' via allOf + validator semantic check."
+    },
+    "layers_modified": { "type": "string" },
+    "artifact": {
+      "type": "object",
+      "required": ["path", "bytes", "sha256"],
+      "properties": {
+        "path": { "type": "string" },
+        "bytes": { "type": "integer", "minimum": 0 },
+        "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+      }
+    },
+    "envelope": {
+      "type": "object",
+      "required": ["base_model", "base_index_sha256", "precision_validated", "context_validated", "router_frozen"],
+      "properties": {
+        "base_model": { "type": "string" },
+        "base_index_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "precision_validated": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "context_validated": { "type": "string" },
+        "router_frozen": { "type": "boolean" }
+      }
+    },
+    "engine": {
+      "type": "object",
+      "required": ["vllm_version", "torch_version", "cuda_version", "router_dtype", "nvfp4_calibration_hash"],
+      "properties": {
+        "vllm_version": { "type": "string" },
+        "torch_version": { "type": "string" },
+        "cuda_version": { "type": "string" },
+        "router_dtype": {
+          "enum": ["float32", "bfloat16", "float16"],
+          "description": "Serve-time router weight dtype. Mechanically constrained to 'float32' whenever carries_neutral_u == true (1.31 MB cost; bfloat16 casting introduces +0.00281 bias error = 93.7% of +0.003 P1 budget)."
+        },
+        "nvfp4_calibration_hash": { "type": "string" }
+      }
+    },
+    "nondeterminism": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["measured_on", "subset_bias", "flip_rate", "batch_config", "tp", "cudagraphs_on", "temperature", "measured_on_benchmark"],
+      "properties": {
+        "measured_on": {
+          "enum": ["base_substrate", "candidate", "n_a_single_forward"],
+          "description": "Explicit provenance: distinguishes base-substrate flip measurements from candidate measurements and deterministic single-forward NLL harnesses."
+        },
+        "subset_bias": {
+          "type": "string",
+          "description": "Explicit disclosure of item-selection bias (e.g., maximal-instability subset vs population sample)."
+        },
+        "flip_rate": { "type": ["number", "null"], "minimum": 0.0, "maximum": 1.0 },
+        "flip_rate_note": { "type": "string" },
+        "batch_config": { "type": "string" },
+        "tp": { "type": "integer", "minimum": 1 },
+        "cudagraphs_on": { "type": "boolean" },
+        "temperature": { "type": "number", "minimum": 0.0 },
+        "measured_on_benchmark": { "type": "string" }
+      }
+    },
+    "noise_floor": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "required": ["b", "c", "flip_sd", "stable_n", "discordant_excluded"],
+        "properties": {
+          "b": { "type": "integer", "minimum": 0 },
+          "c": { "type": "integer", "minimum": 0 },
+          "flip_sd": { "type": "number", "minimum": 0.0 },
+          "stable_n": { "type": "integer", "minimum": 0 },
+          "discordant_excluded": { "type": "integer", "minimum": 0 }
+        }
+      }
+    },
+    "controller": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["controller_type", "anchor_floor", "probe_interval", "stop_reason", "best_checkpoint_step", "trace_sha256", "exposure_histogram"],
+      "properties": {
+        "controller_type": {
+          "enum": ["byoe_fixed_epoch_kl_anchor", "backbone_closed_loop_rebalancer", "none"],
+          "description": "Distinguishes fixed-epoch BYOE cartridge training from the full-backbone closed-loop 50-step rebalancer."
+        },
+        "anchor_floor": { "type": "number", "minimum": 0.0 },
+        "probe_interval": { "type": "integer", "minimum": 0 },
+        "stop_reason": { "type": "string" },
+        "best_checkpoint_step": { "type": "integer", "minimum": 0 },
+        "trace_sha256": { "type": "string" },
+        "exposure_histogram": { "type": "object" }
+      }
+    },
+    "curriculum": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["difficulty_ordering", "hard_coverage", "injection_source"],
+      "properties": {
+        "difficulty_ordering": {
+          "enum": ["none_shuffled_single_epoch", "tercile_easiest_first_1_2_3", "not_applicable"],
+          "description": "Explicit curriculum difficulty ordering; BYOE cartridges ran single-epoch shuffled domain data rather than backbone tercile stratification."
+        },
+        "hard_coverage": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "injection_source": {
+          "enum": ["known_anchor_low_nll", "logit_kl_anchor", "none", "legacy_hard_unknown"],
+          "description": "Note: 'legacy_hard_unknown' is retained solely as a historical provenance tag for pre-remediation runs and is NOT a recommended policy."
+        },
+        "curriculum_note": { "type": "string" }
+      }
+    },
+    "target_utility": {
+      "type": "object",
+      "required": ["domain", "asst_delta_mean", "asst_delta_95ci"],
+      "properties": {
+        "domain": { "type": "string" },
+        "asst_delta_mean": { "type": "number" },
+        "asst_delta_95ci": {
+          "type": "array",
+          "items": { "type": "number" },
+          "minItems": 2,
+          "maxItems": 2
+        }
+      }
+    },
+    "target_known_retention": {
+      "type": "object",
+      "required": ["domain", "known_subset_asst_delta", "status"],
+      "properties": {
+        "domain": { "type": "string" },
+        "known_subset_asst_delta": { "type": ["number", "null"] },
+        "status": { "enum": ["PASS", "FAIL", "UNMEASURED_C009_OPEN"] }
+      }
+    },
+    "protocol_amendments": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "failed_gates": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "checks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["gate", "metric", "observed", "limit", "status"],
+        "properties": {
+          "gate": { "enum": ["P1", "P4", "P6", "P7", "P8", "P9", "UTILITY"] },
+          "metric": { "type": "string" },
+          "observed": { "type": "number" },
+          "limit": { "type": "string" },
+          "status": { "enum": ["PASS", "FAIL", "OPEN"] }
+        }
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "description": "Non-gating diagnostics (e.g., P2 Top-k Jaccard demoted per Law 6, L7 functional overlap). Never PASS/FAIL.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["metric", "observed", "note"],
+        "properties": {
+          "metric": { "type": "string" },
+          "observed": { "type": "number" },
+          "note": { "type": "string" }
+        }
+      }
+    }
+  }
+}

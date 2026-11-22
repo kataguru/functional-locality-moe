@@ -1,0 +1,170 @@
+{
+  "n_cartridges": 11,
+  "n_pairs": 44,
+  "n_positive_gt_003": 5,
+  "n_bad_cartridges": 2,
+  "n_safe_pairs": 39,
+  "caveat": "All 5 positive drift pairs (> +0.003 nats) come from n_bad=2 early-layer Cyber-4 cartridges (cyber4_L0_39, cyber4_L0_33_ctrl).",
+  "models": [
+    {
+      "name": "weight_mean_dW2",
+      "loco11_r2": -0.1347,
+      "loco11_mae": 0.00301,
+      "pi95": 0.01017,
+      "TP": 0,
+      "FN": 5,
+      "FP": 4,
+      "TN": 35,
+      "perm_p_10k": 0.56054,
+      "safe_bias_vs_clamped_zero": 0.00164,
+      "safe_bias_vs_raw_obs": 0.00405,
+      "coder12_mean_pred": 0.00252,
+      "coder12_mean_obs_raw": -0.00403
+    },
+    {
+      "name": "binary_1[L00_L05_open]",
+      "loco11_r2": -0.1231,
+      "loco11_mae": 0.00292,
+      "pi95": 0.01012,
+      "TP": 0,
+      "FN": 5,
+      "FP": 0,
+      "TN": 39,
+      "perm_p_10k": 0.39776,
+      "safe_bias_vs_clamped_zero": 0.00158,
+      "safe_bias_vs_raw_obs": 0.004,
+      "coder12_mean_pred": 0.00262,
+      "coder12_mean_obs_raw": -0.00403
+    },
+    {
+      "name": "law2_unweighted",
+      "loco11_r2": -0.1003,
+      "loco11_mae": 0.00308,
+      "pi95": 0.01002,
+      "TP": 1,
+      "FN": 4,
+      "FP": 10,
+      "TN": 29,
+      "perm_p_10k": 0.0466,
+      "safe_bias_vs_clamped_zero": 0.00187,
+      "safe_bias_vs_raw_obs": 0.00428,
+      "coder12_mean_pred": 0.00395,
+      "coder12_mean_obs_raw": -0.00403
+    },
+    {
+      "name": "weight_max_dW2",
+      "loco11_r2": 0.1223,
+      "loco11_mae": 0.00292,
+      "pi95": 0.00894,
+      "TP": 5,
+      "FN": 0,
+      "FP": 15,
+      "TN": 24,
+      "perm_p_10k": 0.0079,
+      "safe_bias_vs_clamped_zero": 0.00208,
+      "safe_bias_vs_raw_obs": 0.0045,
+      "coder12_mean_pred": 0.00277,
+      "coder12_mean_obs_raw": -0.00403
+    },
+    {
+      "name": "L05_continuous_only",
+      "loco11_r2": 0.5787,
+      "loco11_mae": 0.0015,
+      "pi95": 0.0062,
+      "TP": 5,
+      "FN": 0,
+      "FP": 3,
+      "TN": 36,
+      "perm_p_10k": 0.0055,
+      "safe_bias_vs_clamped_zero": 0.00094,
+      "safe_bias_vs_raw_obs": 0.00336,
+      "coder12_mean_pred": 0.00159,
+      "coder12_mean_obs_raw": -0.00403
+    },
+    {
+      "name": "law2_L05_plus_L639",
+      "loco11_r2": 0.5787,
+      "loco11_mae": 0.0015,
+      "pi95": 0.0062,
+      "TP": 5,
+      "FN": 0,
+      "FP": 3,
+      "TN": 36,
+      "perm_p_10k": 0.0055,
+      "safe_bias_vs_clamped_zero": 0.00094,
+      "safe_bias_vs_raw_obs": 0.00336,
+      "coder12_mean_pred": 0.00159,
+      "coder12_mean_obs_raw": -0.00403
+    }
+  ],
+  "c1_unconstrained_ols_44pairs": {
+    "clamped_y_pos_no_intercept": {
+      "w_L05": 0.08625,
+      "w_L05_se": 0.00774,
+      "w_L05_ci95": [
+        0.07063,
+        0.10186
+      ],
+      "w_L639": -0.00792,
+      "w_L639_se": 0.00427,
+      "w_L639_ci95": [
+        -0.01653,
+        0.00069
+      ]
+    },
+    "clamped_y_pos_with_intercept": {
+      "b0": -0.00022,
+      "b0_ci95": [
+        -0.00151,
+        0.00106
+      ],
+      "w_L05": 0.08725,
+      "w_L05_ci95": [
+        0.07044,
+        0.10405
+      ],
+      "w_L639": -0.00642,
+      "w_L639_se": 0.00609,
+      "w_L639_ci95": [
+        -0.01871,
+        0.00587
+      ]
+    },
+    "raw_obs_delta_no_intercept": {
+      "w_L05": 0.09802,
+      "w_L05_ci95": [
+        0.07942,
+        0.11662
+      ],
+      "w_L639": -0.03891,
+      "w_L639_se": 0.00508,
+      "w_L639_ci95": [
+        -0.04917,
+        -0.02865
+      ]
+    },
+    "interpretation": "NNLS w_L639=0.0 is a non-negativity constraint clamp on a negative unconstrained slope (L06-L39 exhibits slight positive transfer / no positive drift in this dataset, rather than an unconstrained zero)."
+  },
+  "c2_exact_permutation_enumerations_L05_continuous": {
+    "unit_permuted": "Cartridge-level 4-domain continuous outcome vector assigned across 11 cartridges (3 distinct nonzero vectors: cyber4_L0_33_ctrl, cyber4_L0_39, estonian4_L0_39; 8 all-zero vectors -> 11*10*9 = 990 distinct permutations).",
+    "exact_990_continuous_outcome_vectors": {
+      "exceed_or_eq": 5,
+      "total": 990,
+      "exact_p": 0.00505,
+      "p_floor": 0.00101
+    },
+    "exact_110_ordered_bad_pair_ignoring_tiny_estonian": {
+      "exceed_or_eq_inclusive": 1,
+      "strictly_exceed": 0,
+      "total": 110,
+      "exact_p_inclusive": 0.00909,
+      "p_floor": 0.00909
+    },
+    "exact_55_unordered_binary_bad_pair_C11_2": {
+      "rank_match": "top-2 L05 cartridges == exact 2 bad cartridges",
+      "total": 55,
+      "exact_p": 0.01818,
+      "p_floor": 0.01818
+    }
+  }
+}

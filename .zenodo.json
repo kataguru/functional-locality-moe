@@ -1,0 +1,28 @@
+{
+  "title": "Functional Locality in Sparse Mixture-of-Experts: Empirical Laws, Self-Falsified Predictors, Fail-Closed Certificates, and Open Multi-Architecture Reproduction",
+  "upload_type": "software",
+  "description": "Empirical investigation of post-hoc expert modification in Sparse Mixture-of-Experts (L1 rank-dependent evacuation + FP32 gate-row mandate, L2 self-falsification + binary indicator ablation + exact finite-population permutations, L5 matched-capacity early-layer hub instability, L6 3-architecture router boundary cascades, candidate Law 7 full 3x3 cross-cartridge dominance matrix), machine-enforced JSON Schema Draft 2020-12 fail-closed certificates (7 mutation tests), and open public-model reproduction.",
+  "creators": [
+    {
+      "name": "Katajisto, Jari",
+      "affiliation": "Kataguru Research"
+    }
+  ],
+  "keywords": [
+    "Mixture-of-Experts",
+    "Sparse MoE",
+    "Functional Locality",
+    "Fail-Closed Certificates",
+    "Evaluation Methodology",
+    "Modular Fine-Tuning"
+  ],
+  "license": "Apache-2.0",
+  "access_right": "open",
+  "related_identifiers": [
+    {
+      "identifier": "10.5281/zenodo.24445305",
+      "relation": "isSupplementedBy",
+      "resource_type": "software"
+    }
+  ]
+}

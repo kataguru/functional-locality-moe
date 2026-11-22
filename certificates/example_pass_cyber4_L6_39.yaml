@@ -1,0 +1,114 @@
+schema_version: "moe-locality-certificate-v1.4"
+issued_at_utc: "2026-11-22T04:13:51+00:00"
+harness_version: "cached_paired_nll_v1.0"
+cartridge_id: "cyber-4-L6-39"
+verdict: "CERTIFIED_PASS"
+mode: "replace"
+carries_neutral_u: false
+layers_modified: "L06-L39 (L00-L05 frozen per F-039 / L5)"
+artifact:
+  path: "<closed-proprietary-artifact>"
+  bytes: 1006645464
+  sha256: "0904f14033b6467b32eb54985bc67011d2c1c580820ac8bdf1802342bb4c6f18"
+envelope:
+  base_model: "Kataguru-32B-A4B-v1-Sykli4-Soup50-CodeRestore-232E-BF16"
+  base_index_sha256: "991ce1997dc22af34b3a5d027e122dbed413d1e1a92eacf8ccb14d54922dcec1"
+  precision_validated:
+    - "BF16"
+    - "NVFP4"
+  context_validated: "2k-32k"
+  router_frozen: true
+engine:
+  vllm_version: "0.29.0"
+  torch_version: "2.12.1+cu130"
+  cuda_version: "13.0"
+  router_dtype: "bfloat16"
+  nvfp4_calibration_hash: "memoryless_minmax_group16_recomputed_post_merge"
+nondeterminism:
+  measured_on: "base_substrate"
+  subset_bias: "maximal-instability subset (30 items drawn from 44 w=16 flips), NOT population rate and NOT a cyber-4-L6-39 candidate measurement"
+  flip_rate: 0.367
+  batch_config: "batch=1 base-substrate reference (TP=2 CG=36.7%, TP=2 Eager=66.7%, TP=1 CG=46.7%, TP=1 Eager=50.0%)"
+  tp: 2
+  cudagraphs_on: true
+  temperature: 0.0
+  measured_on_benchmark: "GPQA-Diamond (base substrate, 30-item w=16-flipping subset x2)"
+noise_floor:
+  lcb_medium:
+    b: 4
+    c: 3
+    flip_sd: 2.65
+    stable_n: 45
+    discordant_excluded: 7
+  gsm8k:
+    b: 14
+    c: 14
+    flip_sd: 5.29
+    stable_n: 1291
+    discordant_excluded: 28
+controller:
+  controller_type: "byoe_fixed_epoch_kl_anchor"
+  anchor_floor: 0.10
+  probe_interval: 5
+  stop_reason: "epoch_complete_step424_L00_L05_reverted"
+  best_checkpoint_step: 424
+  trace_sha256: "sha256_internal_run_log_task42722"
+  exposure_histogram:
+    epoch_1_unique_pct: 100.0
+curriculum:
+  difficulty_ordering: "none_shuffled_single_epoch"
+  hard_coverage: 1.0
+  injection_source: "logit_kl_anchor"
+  curriculum_note: "BYOE cartridge run used 1-epoch shuffled unique domain data + logit_kl_anchor (did NOT run the full-backbone 30%-anchor / 50-step tercile rebalancer)."
+target_utility:
+  domain: "cyber_holdout"
+  asst_delta_mean: -0.042853
+  asst_delta_95ci:
+    - -0.054262
+    - -0.031631
+target_known_retention:
+  domain: "cyber_known_subset"
+  known_subset_asst_delta: null
+  status: "UNMEASURED_C009_OPEN"
+protocol_amendments:
+  - "Amendment #1 (Historical -> Superseded by Amendment #2): P2 Top-10 Jaccard demoted from PASS/FAIL gate to diagnostic per Law 6 (F-031, reproduced on OLMoE-1B-7B & Qwen3.5-35B-A3B-Base)."
+failed_gates: []
+checks:
+  - gate: "P1"
+    metric: "stem_upper95_ci"
+    observed: 0.000233
+    limit: "<= +0.003"
+    status: "PASS"
+  - gate: "P1"
+    metric: "gsm8k_math_upper95_ci"
+    observed: -0.000375
+    limit: "<= +0.003"
+    status: "PASS"
+  - gate: "P1"
+    metric: "ifeval_upper95_ci"
+    observed: 0.000914
+    limit: "<= +0.003"
+    status: "PASS"
+  - gate: "P1"
+    metric: "bfcl_tool_upper95_ci"
+    observed: -0.001163
+    limit: "<= +0.003"
+    status: "PASS"
+  - gate: "UTILITY"
+    metric: "cyber_holdout_asst_delta"
+    observed: -0.042853
+    limit: "<= -0.030"
+    status: "PASS"
+diagnostics:
+  - metric: "p2_stem_top10_jaccard"
+    observed: 0.9593
+    note: "Non-gating diagnostic (Law 6 boundary sensitivity)"
+  - metric: "p2_gsm8k_math_top10_jaccard"
+    observed: 0.9562
+    note: "Non-gating diagnostic (Law 6 boundary sensitivity)"
+  - metric: "p2_ifeval_top10_jaccard"
+    observed: 0.9695
+    note: "Non-gating diagnostic (Law 6 boundary sensitivity)"
+  - metric: "p2_bfcl_tool_top10_jaccard"
+    observed: 0.9493
+    note: "Non-gating diagnostic (Law 6 boundary sensitivity)"
