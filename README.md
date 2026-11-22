@@ -1,8 +1,10 @@
 # Functional Locality in Sparse Mixture-of-Experts
 
-**Empirical Laws, Self-Falsified Predictors, Fail-Closed Certificates, and Open Multi-Architecture Reproduction (`v1.0.0`)**
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24445840.svg)](https://doi.org/10.5281/zenodo.24445840)
 
-**Author:** Jari Katajisto (Kataguru Research) · **Release:** `v1.0.0` (2026-11-22) · **Companion Systems Release:** [kataguru/moe-longcot-nondeterminism](https://github.com/kataguru/moe-longcot-nondeterminism) (DOI: [10.5281/zenodo.24445305](https://doi.org/10.5281/zenodo.24445305))
+**Empirical Laws, Self-Falsified Predictors, Fail-Closed Certificates, and Open Multi-Architecture Reproduction (`v1.0.1`)**
+
+**Author:** Jari Katajisto (Kataguru Research) · **Release:** `v1.0.1` (2026-11-22) · **DOI:** [10.5281/zenodo.24445840](https://doi.org/10.5281/zenodo.24445840) · **Companion Systems Release:** [kataguru/moe-longcot-nondeterminism](https://github.com/kataguru/moe-longcot-nondeterminism) (DOI: [10.5281/zenodo.24445305](https://doi.org/10.5281/zenodo.24445305))
 
 > **Release Scope (`v1.0.0`, Open Confirmatory Gates Explicitly Marked):** Contains **100% open code, public-model reproduction scripts, `0.68 s` `sm_120` Marlin MoE verifier (confirming upstream `vllm#52525`), public OLMoE routing atlas, machine-enforced JSON Schema Draft 2020-12 (`v1.4`) fail-closed certificates (7 mutation tests), negative results, and aggregated tables**. Proprietary weights, cartridges, expert-ID manifests, data recipes, and private atlases are **strictly excluded** ([NOTICE-weights.md](NOTICE-weights.md)). Open confirmatory gates (`n_bad = 2` for L2, `L7` candidate across 3 domains, `R4 OPEN 2/3`, no behavioral benchmark surviving 12-test FWER/FDR, `LCB-Medium` post-hoc primary pending fresh holdout `EXP-0017`) are explicitly disclosed in the abstract and scoreboard.
 

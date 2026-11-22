@@ -1,8 +1,9 @@
 # Functional Locality of Post-Hoc Expert Modification in Sparse Mixture-of-Experts
 
-**Kataguru Modular MoE Research Program — Methods Technical Report (`v1.0.0`, Open Confirmatory Gates Explicitly Marked)**
+**Kataguru Modular MoE Research Program — Methods Technical Report (`v1.0.1`, Open Confirmatory Gates Explicitly Marked)**
 - **Author:** Jari Katajisto (Kataguru Research)
 - **Date:** 2026-11-22
+- **DOI:** [10.5281/zenodo.24445840](https://doi.org/10.5281/zenodo.24445840)
 - **Repository:** `https://github.com/kataguru/functional-locality-moe`
 - **Companion Systems Publication:** [kataguru/moe-longcot-nondeterminism](https://github.com/kataguru/moe-longcot-nondeterminism) (DOI: [10.5281/zenodo.24445305](https://doi.org/10.5281/zenodo.24445305); upstream comment [vllm#52525](https://github.com/vllm-project/vllm/issues/52525#issuecomment-7082387518)) — 100% public `0.68 s` `sm_120` kernel verification + public `AWQ` 3-way A/B/C (`VLLM_BATCH_INVARIANT=1` & PR `#52532` both `20/20` bit-exact) + public `OLMoE`/`Qwen3.5-Base` Law 6, with clearly marked private-substrate `2×2`/`Ctrl D` corroboration. This report (`v1.0.0`) presents the Methods findings with full statistical disclosures and symmetric mechanical certificate enforcement (`schema v1.4`, 7 fail-closed mutation tests).
 - **Open Public Reproduction Substrates (Apache 2.0):** `allenai/OLMoE-1B-7B-0125-Instruct` (`16L × 64E`, `top_k=8`, ~16 min on 1× RTX 5090 BF16), `Qwen/Qwen3.5-35B-A3B-Base` (`40L × 256E`, `top_k=8`), and `dark-side-of-the-code/Qwen3-Coder-30B-A3B-Instruct-AWQ` (`48L × 128E`, `top_k=8`, Marlin WNA16 control)

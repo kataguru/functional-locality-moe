@@ -2,6 +2,7 @@ cff-version: 1.2.0
 message: "If you use the functional locality harness, certificate schema, empirical laws, or public MoE reproduction scripts, please cite this release."
 title: "Functional Locality in Sparse Mixture-of-Experts: Empirical Laws, Self-Falsified Predictors, Fail-Closed Certificates, and Open Multi-Architecture Reproduction"
 version: "1.0.1"
+doi: "10.5281/zenodo.24445840"
 date-released: "2026-11-22"
 license: "Apache-2.0"
 repository-code: "https://github.com/kataguru/functional-locality-moe"

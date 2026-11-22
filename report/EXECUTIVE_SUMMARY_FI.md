@@ -1,7 +1,7 @@
 # Tutkimuksen ydinanti ja johtopäätökset (Selkokielinen yhteenveto)
 
-**Kataguru Modular MoE Research Program (`v1.0.0`) — 2026-11-22**  
-**Tekijä:** Jari Katajisto (Kataguru Research)  
+**Kataguru Modular MoE Research Program (`v1.0.1`) — 2026-11-22**  
+**Tekijä:** Jari Katajisto (Kataguru Research) · **DOI:** [10.5281/zenodo.24445840](https://doi.org/10.5281/zenodo.24445840)  
 *Täysi tekninen raportti ja mittausdata: [TECHNICAL_REPORT.md](TECHNICAL_REPORT.md) | [CONFOUNDS.md](../ledger/CONFOUNDS.md) | Rinnakkaisjulkaisu (Systems): [kataguru/moe-longcot-nondeterminism](https://github.com/kataguru/moe-longcot-nondeterminism) ([DOI: 10.5281/zenodo.24445305](https://doi.org/10.5281/zenodo.24445305))*
 
 ---
@@ -46,7 +46,7 @@ Suureen, valmiiksi koulutettuun MoE-kielimalliin **voi asentaa uusia osaamisia m
 
 ---
 
-## Julkaisupari (`v1.0.0`)
+## Julkaisupari (`v1.0.1`)
 
 1. **Systems-julkaisu:** [kataguru/moe-longcot-nondeterminism](https://github.com/kataguru/moe-longcot-nondeterminism) ([DOI: 10.5281/zenodo.24445305](https://doi.org/10.5281/zenodo.24445305)) — Long-CoT benchmark-validiteetti, `sm_120` `vllm#52525` -varmennus, `VLLM_BATCH_INVARIANT=1` & PR `#52532` `20/20` A/B/C-korjaus ja Law 6.
-2. **Methods-julkaisu (tämä repo):** [kataguru/functional-locality-moe](https://github.com/kataguru/functional-locality-moe) — Modulaarinen MoE-lokaalius, 3-arkkitehtuurin reproduktio, L1/L2/L5/L6/L7, fail-closed JSON-skeemasertifikaatit, kaikki negatiiviset tulokset sekä avoimet konfirmatoriset portit.
+2. **Methods-julkaisu (tämä repo):** [kataguru/functional-locality-moe](https://github.com/kataguru/functional-locality-moe) ([DOI: 10.5281/zenodo.24445840](https://doi.org/10.5281/zenodo.24445840)) — Modulaarinen MoE-lokaalius, 3-arkkitehtuurin reproduktio, L1/L2/L5/L6/L7, fail-closed JSON-skeemasertifikaatit, kaikki negatiiviset tulokset sekä avoimet konfirmatoriset portit.
